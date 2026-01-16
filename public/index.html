@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bangalore Art Events Weekly Update</title>
+
+  <!-- SEO and Social Media Meta Tags -->
+  <meta name="description" content="Your weekly guide to art exhibitions, music, theater, dance, and creative events happening in Bangalore.">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bangalore Art Events Weekly Update">
+  <meta property="og:description" content="Your weekly guide to art exhibitions, music, theater, dance, and creative events happening in Bangalore.">
+  <meta property="og:url" content="http://localhost:3000">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bangalore Art Events Weekly Update">
+  <meta name="twitter:description" content="Your weekly guide to art exhibitions, music, theater, dance, and creative events happening in Bangalore.">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Bangalore Art Events Weekly Update</h1>
+
+    <div class="admin-section">
+      <button id="scrape-btn" class="scrape-btn">Fetch New Events from Web</button>
+      <span id="scrape-status"></span>
+    </div>
+
+    <form id="item-form">
+      <input
+        type="text"
+        id="item-title"
+        placeholder="Event Name"
+        required
+      >
+      <input
+        type="text"
+        id="item-venue"
+        placeholder="Venue"
+        required
+      >
+      <input
+        type="text"
+        id="item-date"
+        placeholder="Date & Time (e.g., Jan 20, 2026 - 7:00 PM)"
+        required
+      >
+      <select id="item-type" required>
+        <option value="">Select Event Type</option>
+        <option value="Art Exhibition">Art Exhibition</option>
+        <option value="Music">Music</option>
+        <option value="Theater">Theater</option>
+        <option value="Dance">Dance</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Film Screening">Film Screening</option>
+        <option value="Performance">Performance</option>
+        <option value="Other">Other</option>
+      </select>
+      <textarea
+        id="item-description"
+        placeholder="Event Description"
+        rows="3"
+        required
+      ></textarea>
+      <input
+        type="url"
+        id="item-link"
+        placeholder="Event Link (optional)"
+      >
+      <div class="form-actions">
+        <button type="submit" id="submit-btn">Add Event</button>
+        <button type="button" id="cancel-btn" style="display: none;">Cancel</button>
+      </div>
+    </form>
+
+    <div id="items-container">
+      <h2>Upcoming Events</h2>
+      <div id="items-list"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
