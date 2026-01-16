@@ -76,9 +76,12 @@ my-first-app/
 
 ## Event Sources
 
-Currently scrapes from:
-- insider.in/bangalore (Arts section)
-- allevents.in/bangalore (Arts section)
+Currently scrapes from **5 platforms**:
+- **insider.in** - Arts section for Bangalore
+- **allevents.in** - Arts section for Bangalore
+- **bookmyshow.com** - Events and performances in Bengaluru
+- **timeout.com** - Art events in Bangalore
+- **eventbrite.com** - Arts events in Bengaluru
 
 Additional sources can be easily added by extending `scrapers.js`.
 
