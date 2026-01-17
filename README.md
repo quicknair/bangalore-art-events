@@ -76,13 +76,12 @@ my-first-app/
 
 ## Event Sources
 
-Currently scrapes from **4 platforms**:
+Currently scrapes from **3 platforms**:
 - **district.in** (formerly insider.in) - Events in Bengaluru (Puppeteer)
 - **allevents.in** - Arts section for Bangalore
-- **bookmyshow.com** - Theatre and plays in Bengaluru (Puppeteer with stealth)
 - **eventbrite.com** - Arts events in Bengaluru
 
-Uses Puppeteer with stealth plugin to bypass anti-bot protection on modern event sites.
+Uses Puppeteer for JavaScript-heavy sites and Cheerio for static HTML parsing.
 
 Additional sources can be easily added by extending `scrapers.js`.
 

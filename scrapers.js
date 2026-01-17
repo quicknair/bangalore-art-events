@@ -1,9 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-
-puppeteer.use(StealthPlugin());
+const puppeteer = require('puppeteer');
 
 async function scrapeEvents() {
   const events = [];
@@ -20,13 +17,6 @@ async function scrapeEvents() {
     events.push(...allEventsData);
   } catch (error) {
     console.error('Error scraping AllEvents:', error.message);
-  }
-
-  try {
-    const bookMyShowEvents = await scrapeBookMyShowWithPuppeteer();
-    events.push(...bookMyShowEvents);
-  } catch (error) {
-    console.error('Error scraping BookMyShow:', error.message);
   }
 
   try {
@@ -48,7 +38,6 @@ async function scrapeInsiderWithPuppeteer() {
   try {
     browser = await puppeteer.launch({
       headless: 'new',
-      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
@@ -94,67 +83,6 @@ async function scrapeInsiderWithPuppeteer() {
 
   } catch (error) {
     console.error('District.in Puppeteer error:', error.message);
-  } finally {
-    if (browser) await browser.close();
-  }
-
-  return events;
-}
-
-async function scrapeBookMyShowWithPuppeteer() {
-  const events = [];
-  let browser;
-
-  try {
-    browser = await puppeteer.launch({
-      headless: 'new',
-      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
-    });
-
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1920, height: 1080 });
-
-    await page.goto('https://in.bookmyshow.com/explore/plays-bengaluru', {
-      waitUntil: 'networkidle2',
-      timeout: 30000
-    });
-
-    await page.waitForTimeout(3000);
-
-    const extractedEvents = await page.evaluate(() => {
-      const results = [];
-      const h3Elements = document.querySelectorAll('h3');
-
-      h3Elements.forEach(h3 => {
-        const title = h3.textContent.trim();
-        const parent = h3.closest('a') || h3.closest('div')?.querySelector('a');
-        const link = parent ? parent.href : '';
-
-        if (title && title.length > 5 && title.length < 150 && !title.includes('Sorry')) {
-          results.push({
-            title: title.substring(0, 200),
-            venue: 'Bengaluru',
-            date: 'Date TBA',
-            description: 'Theatre/Play event',
-            link: link
-          });
-        }
-      });
-
-      return results.slice(0, 20);
-    });
-
-    extractedEvents.forEach(event => {
-      events.push({
-        ...event,
-        eventType: 'Theater',
-        source: 'bookmyshow.com'
-      });
-    });
-
-  } catch (error) {
-    console.error('BookMyShow Puppeteer error:', error.message);
   } finally {
     if (browser) await browser.close();
   }
